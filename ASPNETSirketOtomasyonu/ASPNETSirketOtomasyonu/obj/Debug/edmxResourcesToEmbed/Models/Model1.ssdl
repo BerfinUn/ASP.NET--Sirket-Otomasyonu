@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ASPNETSirketModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Birimler">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Birim" Type="varchar" MaxLength="50" />
+    <Property Name="Aciklama" Type="text" />
+  </EntityType>
+  <EntityType Name="Duyurular">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Baslik" Type="varchar" MaxLength="50" />
+    <Property Name="Duyuru" Type="text" />
+    <Property Name="Aciklama" Type="text" />
+    <Property Name="Tarih" Type="date" />
+    <Property Name="Saat" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Iletisim">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AdiSoyadi" Type="varchar" MaxLength="150" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="Baslik" Type="varchar" MaxLength="50" />
+    <Property Name="Mesaj" Type="text" />
+    <Property Name="Tarih" Type="date" />
+  </EntityType>
+  <EntityType Name="Kullanicilar">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="YetkiID" Type="int" />
+    <Property Name="KullaniciAdi" Type="varchar" MaxLength="50" />
+    <Property Name="Sifre" Type="varchar" MaxLength="10" />
+    <Property Name="Adi" Type="varchar" MaxLength="50" />
+    <Property Name="Soyadi" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="Isactive" Type="bit" />
+    <Property Name="GirisTarihi" Type="date" />
+    <Property Name="Resim" Type="text" />
+  </EntityType>
+  <EntityType Name="PersonelBasarilari">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PersonelID" Type="int" />
+    <Property Name="Basari" Type="text" />
+    <Property Name="Tarih" Type="date" />
+  </EntityType>
+  <EntityType Name="Personeller">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BirimID" Type="int" Nullable="false" />
+    <Property Name="Adi" Type="varchar" MaxLength="50" />
+    <Property Name="Soyadi" Type="varchar" MaxLength="50" />
+    <Property Name="Tel_1" Type="varchar" MaxLength="20" />
+    <Property Name="Tel_2" Type="varchar" MaxLength="20" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="Adres" Type="text" />
+    <Property Name="Maasi" Type="decimal" Precision="28" Scale="2" />
+    <Property Name="Resim" Type="text" />
+    <Property Name="Aciklama" Type="text" />
+    <Property Name="Isactive" Type="bit" />
+    <Property Name="GirisTarih" Type="date" />
+  </EntityType>
+  <EntityType Name="Sirket">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SirketAdi" Type="varchar" MaxLength="50" />
+    <Property Name="Tel_1" Type="varchar" MaxLength="20" />
+    <Property Name="Tel_2" Type="varchar" MaxLength="20" />
+    <Property Name="Fax" Type="varchar" MaxLength="20" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="Adres" Type="text" />
+    <Property Name="KurulusTarihi" Type="date" />
+  </EntityType>
+  <EntityType Name="SirketHakkinda">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Hakkinda" Type="text" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Yetkilendirme">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Yetki" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_Kullanicilar_Yetkilendirme">
+    <End Role="Yetkilendirme" Type="Self.Yetkilendirme" Multiplicity="0..1" />
+    <End Role="Kullanicilar" Type="Self.Kullanicilar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Yetkilendirme">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Kullanicilar">
+        <PropertyRef Name="YetkiID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PersonelBasarilari_Personeller">
+    <End Role="Personeller" Type="Self.Personeller" Multiplicity="0..1" />
+    <End Role="PersonelBasarilari" Type="Self.PersonelBasarilari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personeller">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PersonelBasarilari">
+        <PropertyRef Name="PersonelID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Personeller_Birimler">
+    <End Role="Birimler" Type="Self.Birimler" Multiplicity="1" />
+    <End Role="Personeller" Type="Self.Personeller" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Birimler">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Personeller">
+        <PropertyRef Name="BirimID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ASPNETSirketModelStoreContainer">
+    <EntitySet Name="Birimler" EntityType="Self.Birimler" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Duyurular" EntityType="Self.Duyurular" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Iletisim" EntityType="Self.Iletisim" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Kullanicilar" EntityType="Self.Kullanicilar" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PersonelBasarilari" EntityType="Self.PersonelBasarilari" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Personeller" EntityType="Self.Personeller" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Sirket" EntityType="Self.Sirket" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SirketHakkinda" EntityType="Self.SirketHakkinda" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Yetkilendirme" EntityType="Self.Yetkilendirme" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Kullanicilar_Yetkilendirme" Association="Self.FK_Kullanicilar_Yetkilendirme">
+      <End Role="Yetkilendirme" EntitySet="Yetkilendirme" />
+      <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PersonelBasarilari_Personeller" Association="Self.FK_PersonelBasarilari_Personeller">
+      <End Role="Personeller" EntitySet="Personeller" />
+      <End Role="PersonelBasarilari" EntitySet="PersonelBasarilari" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Personeller_Birimler" Association="Self.FK_Personeller_Birimler">
+      <End Role="Birimler" EntitySet="Birimler" />
+      <End Role="Personeller" EntitySet="Personeller" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
